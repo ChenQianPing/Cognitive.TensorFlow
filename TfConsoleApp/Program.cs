@@ -6,7 +6,7 @@ namespace TfConsoleApp
     {
         static void Main(string[] args)
         {
-            TensorFlowHelp.BasicMatrixOperation();
+            TensorFlowHelp.BasicOperation2();
 
             Console.ReadKey();
         }

@@ -53,6 +53,29 @@ namespace TfConsoleApp
         }
         #endregion
 
+        public static void BasicOperation2()
+        {
+            using (var s = new TFSession())
+            {
+                var g = s.Graph;
+
+                var a = g.Const(5);
+                var b = g.Const(3);
+
+                var c = g.Mul(a, b);
+                var d = g.Add(a, b);
+                var e = g.Add(c, d);
+
+                var runner = s.GetRunner();
+
+                var result = runner.Run(e);
+
+                Console.WriteLine($"相加的结果:{result.GetValue()}");
+
+                // 相加的结果:23
+            }
+        }
+
         #region BasicPlaceholderOperation
         /// <summary>
         /// 基础占位符运算
