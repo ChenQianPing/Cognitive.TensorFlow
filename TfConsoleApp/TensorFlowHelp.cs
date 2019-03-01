@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using TensorFlow;
 
@@ -21,6 +22,31 @@ namespace TfConsoleApp
             }            
         }
         #endregion
+
+        public static void TestMethod2()
+        {
+            string model_file = $@"E:\PythonSrc\Py.Watermelon\Tensorflow\grf.pb";
+
+            var graph = new TFGraph();
+            // 重点是下面的这句，把训练好的pb文件给读出来字节，然后导入
+            var model = File.ReadAllBytes(model_file);
+            graph.Import(model);
+
+            Console.WriteLine("请输入一个图片的地址");
+            var src = Console.ReadLine();
+            var tensor = ImageUtil.CreateTensorFromImageFile(src);
+
+            using (var sess = new TFSession(graph))
+            {
+                var runner = sess.GetRunner();
+                runner.AddInput(graph["Cast_1"][0], tensor);
+                var r = runner.Run(graph.Softmax(graph["softmax_linear/softmax_linear"][0]));
+                var v = (float[,])r.GetValue();
+                Console.WriteLine(v[0, 0]);
+                Console.WriteLine(v[0, 1]);
+            }
+        }
+
 
         #region BasicOperation
         /// <summary>

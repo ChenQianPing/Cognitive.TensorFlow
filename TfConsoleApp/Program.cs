@@ -6,7 +6,7 @@ namespace TfConsoleApp
     {
         static void Main(string[] args)
         {
-            TensorFlowHelp.BasicOperation2();
+            TensorFlowHelp.TestMethod2();
 
             Console.ReadKey();
         }
